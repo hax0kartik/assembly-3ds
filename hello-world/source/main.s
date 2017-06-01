@@ -7,7 +7,8 @@ str:.asciz "\nHello World!"
 	.extern gfxInitDefault
 	.extern gfxExit
 	.extern consoleInit
-	.extern kDown
+	.extern hidKeysDown
+	.extern hidScanInput
 	.extern aptMainLoop
 
 main:
@@ -22,7 +23,11 @@ main:
 	 bl loop
 loop:
 	bl aptMainLoop
-	cmp r0, #1
+	bl hidScanInput
+	bl hidKeysDown
+	mov r1, #0x1u @macro BIT(n)
+	lsl r1, r1, #3 @macro BIT(3) 3 = start if(hidKeysDown() & KEY_START)break;
+	cmp r1, r0
 	bne loop
 	bl exit	 
 exit:

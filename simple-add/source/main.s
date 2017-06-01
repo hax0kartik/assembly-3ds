@@ -36,7 +36,10 @@ main:
 	
 loop:
 	bl aptMainLoop
-	cmp r0, #0
+	bl hidScanInput
+	mov r1, #0x1u
+	lsl r1, r1, #3
+	cmp r1, r0
 	bne loop
 	bl exit
 	

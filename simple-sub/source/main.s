@@ -1,5 +1,5 @@
 @ assembly project 3ds
-@ all trhe code is basically same with that of simple-add
+@ all the code is basically same with that of simple-add
 	.data
 	.balign 4
 str:.asciz "a-b = %d"
@@ -36,7 +36,11 @@ main:
 	
 loop:
 	bl aptMainLoop
-	cmp r0, #0
+	bl hidScanInput
+	bl hidKeysDown
+	mov r1, #0x1u
+	lsl r1, r1, #3
+	cmp r0, r1
 	bne loop
 	bl exit
 	
